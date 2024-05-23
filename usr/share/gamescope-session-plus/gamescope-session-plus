@@ -252,6 +252,14 @@ if command -v /usr/bin/ibus-daemon >/dev/null; then
 	/usr/bin/ibus-daemon -d -r --panel=disable --emoji-extension=disable
 fi
 
+#Use powerbuttond on galileo/jupiter only
+SYS_ID="$(cat /sys/devices/virtual/dmi/id/product_name)"
+if [[ ":Jupiter:Galileo:" =~ ":$SYS_ID:" ]]; then
+	(while true; do
+		/usr/lib/hwsupport/powerbuttond
+	done) &
+fi
+
 # If we have mangoapp binary start it
 if command -v mangoapp >/dev/null; then
 	(while true; do
